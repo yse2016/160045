@@ -30,6 +30,7 @@ public FrameMan(){
 		button = new JButton("ClickMe!");
 		textfield = new JTextField(10);
 
+
     button.addActionListener(this);
 
     panel1.add(textfield);
