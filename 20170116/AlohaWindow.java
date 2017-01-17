@@ -13,8 +13,8 @@ public class AlohaWindow {
 class AlohaWindowMan{
 	// field
 	JFrame frame;
-	JButton button1;
-  JButton button2;
+	JButton btnOpen;
+  JButton btnSave;
 	JPanel panel;		// button&field
   JTextField fileName;
 	JTextField fileNameField;
@@ -29,33 +29,57 @@ class AlohaWindowMan{
 		frame.setSize(300, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		button1 = new JButton("Click Me!");
-    button2 = new JButton("Buton2");
+		btnOpen = new JButton("開く");
+//		btnOpen.addActionListener(this);
+		btnOpen.setActionCommand("open");
+
+		btnSave = new JButton("保存");
+//		btnSave.addActionListener(this);
+		btnSave.setActionCommand("save");
+
 		fileNameField = new JTextField("ALOHA", 20);
 
 		panel = new JPanel();
 		panel.add(fileNameField);
-		panel.add(button1);
-    panel.add(button2);
+		panel.add(btnSave);
+    panel.add(btnOpen);
+
+		Container con = frame.getContentPane();
+		con.setLayout(new GridLayout(2, 1));
+		con.add(panel);
+
 
 		frame.setVisible(true);
 	}
 
+
+
 	// click
-	public void ActionPerformed(ActionEvent ae) {
-    FileReader fr;
-  	BufferedReader br;
+	public void actionPerformed(ActionEvent ae) {
+		// コマンドを、しらべる
+		String cmd = ae.getActionCommand();
 
-  	try {
-  		String textFile = fileName.getText();
-  		fr = new FileReader(textFile);
-  		br = new BufferedReader(fr);
+		// もし、、、なら、、、
+		if(cmd.equals("open")) {
+			// 「ファイルを開く」を開く
+			JFileChooser fc = new JFileChooser();
 
-  		String data = br.readLine();	// read
-  		textArea.setText(data);	// write&disp
-  	} catch(IOException e) {
-  		System.out.println("IO error.");
-  	}
+			// 表示するdirをきめる
+			fc.setCurrentDirectory(new File("."));
+
+			// ダイアログをつくる
+			int ret = fc.showOpenDialog(frame);
+
+			// 選ばれたファイルを、しらべる
+			if(ret == JFileChooser.APPROVE_OPTION) {
+				// 選ばれたファイル
+				File file = fc.getSelectedFile();
+
+				// ファイル名、保存場所をしらべる
+				textFileName = file.getAbsolutePath();
+
+				// テキストフィールドに表示
+				fileName.setText(textFileName);
+			}
+		}
 	}
-
-}
