@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <script>
+    window.addEventListener("load", init);
+    function init() {
+      var stage = new createjs.Stage("myCanvas");
+
+      var shape = new createjs.Shape();
+      var flag = 0;
+      shape.graphics.beginFill("DarkRed");
+      shape.graphics.drawRoundRect(0, 0, 100, 130, 20, 20);
+      stage.addChild(shape);
+
+      createjs.Ticker.on('tick', function(){
+
+if (shape.x == 0) {
+  flag = 0;
+}
+if (shape.x == 150) {
+  flag = 1;
+}
+
+
+if (flag == 0) {
+  shape.x += 3;
+  shape.y += 3;
+}else {
+  shape.x += -3;
+  shape.y += -3;
+}
+
+        stage.update();
+
+      });
+          }
+
+  </script>
+</head>
+<body>
+  <canvas id="myCanvas" width="640" height="1000"></canvas>
+</body>
+</html>
