@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="css/base.css">
+  <script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+  <script>
+    window.addEventListener("load", init);
+    function init() {
+
+      var stage = new createjs.Stage("myCanvas");
+
+			var poly = new createjs.Shape();
+			poly.graphics.beginFill("DarkBlue");
+			poly.graphics.drawPolyStar(0, 0, 75, 5, 0.6, -90); //75px star
+			stage.addChild(poly);
+      poly.x = stage.canvas.width / 2;
+      poly.y = stage.canvas.height / 2;
+      window.addEventListener("keydown", handleKeyDown);
+      function handleKeyDown(event) {
+        var keyCode = event.keyCode;
+        if (keyCode == 102) { 				// 右6
+          poly.x += 2;
+        } else if (keyCode == 100) { // 左4
+          poly.x -= 2;
+        } else if (keyCode == 98) { // 下2
+          poly.y += 2;
+        } else if (keyCode == 104) { // 上8
+          poly.y -= 2;
+        } else if (keyCode == 103) { // 左上7
+          poly.rotation -= 10;
+        } else if (keyCode == 105) { // 右上9
+          poly.rotation += 10;
+        } else if (keyCode == 101) { // 真ん中5
+     				poly.x = 480;
+						poly.y = 270;
+						poly.rotation = 0;
+        }
+
+      }
+      createjs.Ticker.addEventListener("tick", handleTick);
+      function handleTick() {
+        stage.update();
+      }
+    }
+  </script>
+</head>
+<body>
+	<header>
+		<h2>160045</h2><br>
+		左上(テンキー7):左回転 右上(テンキー9):右回転　真中(テンキー5):リセット　上下左右(テンキー2 4 8 6)：上下左右移動
+	</header>
+  <canvas id="myCanvas" width="960" height="540"></canvas>
+</body>
+</html>
